@@ -22,15 +22,16 @@ class Upsert
         rescue PG::Error => pg_error
           if pg_error.message =~ /function #{name}.* does not exist/i
             if first_try
-              Upsert.logger.info %{[upsert] Function #{name.inspect} went missing, trying to recreate}
+              Upsert.logger.info %{[william] Function #{name.inspect} went missing, trying to recreate}
               first_try = false
               create!
               retry
             else
-              Upsert.logger.info %{[upsert] Failed to create function #{name.inspect} for some reason}
+              Upsert.logger.info %{[william] Failed to create function #{name.inspect} for some reason}
               raise pg_error
             end
           else
+            Upsert.logger.info %{[william] pg_error}
             raise pg_error
           end
         end
